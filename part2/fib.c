@@ -23,6 +23,12 @@ int main(int argc, char *argv[])
     pthread_create(&tid, &attr, runner, argv[1]);
     pthread_join(tid, NULL);
     printf("sum = %d\n",sum);
+    int index = 0;
+    int upper = atoi(argv[1]);
+    for (index = 0; index <= upper; index++)
+    {
+        printf("Fib[%d] = %d\n",index, outArr[index]);
+    }
 }
 
 void *runner(void *param)
@@ -31,6 +37,6 @@ void *runner(void *param)
     outArr[0] = 0;
     outArr[1] = 1;
     for (i = 2; i <= upper; i++)
-        outArr[i] = outArr[i - 1] + outArr[i - 2];
+        sum = outArr[i] = outArr[i - 1] + outArr[i - 2];
     pthread_exit(0);
 }
