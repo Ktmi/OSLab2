@@ -1,8 +1,8 @@
 #include <pthread.h>
 #include <stdio.h>
 
-int sum;
-int outArr[1024];
+long long sum;
+long long outArr[1024];
 void *runner(void *param);
 
 int main(int argc, char *argv[])
@@ -24,11 +24,11 @@ int main(int argc, char *argv[])
     pthread_attr_init(&attr);
     pthread_create(&tid, &attr, runner, argv[1]);
     pthread_join(tid, NULL);
-    printf("sum = %d\n",sum);
+    printf("sum = %lld\n",sum);
     int index = 0;
     for (index = 0; index <= upper; index++)
     {
-        printf("Fib[%d] = %d\n",index, outArr[index]);
+        printf("Fib[%d] = %lld\n",index, outArr[index]);
     }
 }
 
