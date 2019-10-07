@@ -46,10 +46,11 @@ void * SimpleThreads(void * which)
 	int num, val;
 	for(num = 0; num < 20; num++)
 	{
-		if(random() > RAND_MAX / 2)
-			usleep(10);
 		#ifdef PTHREAD_SYNC              //If enabled
 		pthread_mutex_lock(&sharedMutex);//Lock access to resource
+		#else
+		if(random() > RAND_MAX / 2)
+			usleep(10);
 		#endif
 		val = SharedVariable;
 		printf("*** thread %d sees value %d\n", *((int *) which), val);

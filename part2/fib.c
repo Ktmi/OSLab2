@@ -24,7 +24,7 @@ int main(int argc, char *argv[])
     pthread_attr_init(&attr);
     pthread_create(&tid, &attr, runner, argv[1]);
     pthread_join(tid, NULL);
-    printf("sum = %lld\n",sum);
+    printf("Final fib = %lld\n",sum);
     int index = 0;
     for (index = 0; index <= upper; index++)
     {
