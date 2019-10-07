@@ -26,7 +26,6 @@ int main(int argc, char *argv[])
     pthread_join(tid, NULL);
     printf("sum = %d\n",sum);
     int index = 0;
-    int upper = atoi(argv[1]);
     for (index = 0; index <= upper; index++)
     {
         printf("Fib[%d] = %d\n",index, outArr[index]);
