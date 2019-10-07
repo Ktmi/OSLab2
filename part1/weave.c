@@ -44,17 +44,18 @@ int main(int argc, char ** argv)
 void * SimpleThreads(void * which)
 {
 	int num, val;
-	for(num = 0; num < 20; num++){
-		#ifdef PTHREAD_SYNC
-		pthread_mutex_lock(&sharedMutex);
-		#endif
+	for(num = 0; num < 20; num++)
+	{
 		if(random() > RAND_MAX / 2)
 			usleep(10);
+		#ifdef PTHREAD_SYNC              //If enabled
+		pthread_mutex_lock(&sharedMutex);//Lock access to resource
+		#endif
 		val = SharedVariable;
 		printf("*** thread %d sees value %d\n", *((int *) which), val);
 		SharedVariable = val + 1;
 		#ifdef PTHREAD_SYNC
-		pthread_mutex_unlock(&sharedMutex);
+		pthread_mutex_unlock(&sharedMutex);//When done, unlock access
 		#endif
 	}
 	val = SharedVariable;
