@@ -5,6 +5,8 @@
 int SharedVariable = 0;
 #ifdef PTHREAD_SYNC
 pthread_mutex_t sharedMutex;
+pthread_barrier_t barrier;
+pthread_barrierattr_t attr;
 #endif
 
 void * SimpleThreads(void * which);
@@ -27,6 +29,9 @@ int main(int argc, char ** argv)
 	pthread_t threads[threadCount];
 	int thread_args[threadCount];
 	int num;
+	#ifdef PTHREAD_SYNC
+	pthread_barrier_init(&barrier, &attr, threadCount);
+	#endif
 	for(num = 0; num < threadCount; num++)
 	{
 		thread_args[num] = num;
@@ -37,7 +42,11 @@ int main(int argc, char ** argv)
 	{
 		pthread_join(threads[num], NULL);
 	}
-	
+	#ifdef PTHREAD_SYNC
+	pthread_barrier_destroy(&barrier);
+	#endif
+
+
 	return 0;
 }
 
@@ -59,6 +68,9 @@ void * SimpleThreads(void * which)
 		pthread_mutex_unlock(&sharedMutex);//When done, unlock access
 		#endif
 	}
+	#ifdef PTHREAD_SYNC
+	pthread_barrier_wait(&barrier);
+	#endif
 	val = SharedVariable;
 	printf("Thread %d sees final value %d\n", *((int *) which), val);
 }
